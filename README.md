@@ -40,3 +40,54 @@ npm run build
 ```
 yarn build
 ```
+
+## Типы:
+
+**ПРОДУКТ:**
+```
+export interface IProductItem {
+    "id": string,
+    "description": string,
+    "image": string,
+    "title": string,
+    "category": string,
+    "price": number
+}
+```
+
+**ЗАКАЗ:**
+```
+export interface IOrder {
+    products: IProductItem[];
+    totalPrice: number;
+    addProduct(): void;
+    deleteProduct(): void;
+}
+```
+
+**Модульные окна:**
+```
+export interface IModal {
+    "modal": string;
+    open(): void;
+    close(): void;
+}
+```
+
+**Данные ПОЛЬЗОВАТЕЛЯ:**
+```
+export interface IUserData {
+    payment: paymentMethod;
+    address: string;
+    email: string;
+    telephone: string;
+    setPayment(): void;
+    setAddress(): void;
+    setEmail(): void;
+    setTelephone(): void;
+}
+```
+
+## схема:
+
+![схема](https://github.com/JuniorRF/web-larek-frontend/scheme.PNG "Схема")
