@@ -44,6 +44,7 @@ yarn build
 ## Типы:
 
 **ПРОДУКТ:**
+класс продуктов, будет выгружаться с сервера и заполняться страница или модальное окно
 ```
 export interface IProductItem {
     "id": string,
@@ -56,37 +57,59 @@ export interface IProductItem {
 ```
 
 **ЗАКАЗ:**
+класс заказа, количество товаров и общая цена.
+метод ```addProduct``` добавляет в заказ продукт
+метод ```deleteProduct``` удаляет из заказа продукт
 ```
 export interface IOrder {
     products: IProductItem[];
     totalPrice: number;
-    addProduct(): void;
-    deleteProduct(): void;
+    addProduct(id: string): void;
+    deleteProduct(id: string): void;
 }
 ```
 
 **Модульные окна:**
+Класс модального окна
+получает информаций о типе модального окна (о товаре, форма для заполнении или заказ)
+метод ```open``` открывает модальное окно
+метод ```close``` закрывает модальное окно
+
 ```
 export interface IModal {
     "modal": string;
-    open(): void;
+    open(<T>): void;
     close(): void;
 }
 ```
 
 **Данные ПОЛЬЗОВАТЕЛЯ:**
+Класс для хранения информации от пользователя.
+- ```payment``` способ оплаты
+- ```address``` адрес доставки
+- ```email``` емайл
+- ```telephone``` телефон для связи
+#### Методы ```set``` для установки значений
+
 ```
 export interface IUserData {
     payment: paymentMethod;
     address: string;
     email: string;
     telephone: string;
-    setPayment(): void;
-    setAddress(): void;
-    setEmail(): void;
-    setTelephone(): void;
+    setPayment(payment: string): void;
+    setAddress(address: string): void;
+    setEmail(email: string): void;
+    setTelephone(telephone: string): void;
 }
 ```
+### class EventEmitter:
+слушатель событий от пользователя.
+
+### class Api:
+Запрос сервера о таварах
+методы: 'GET'|'POST' | 'PUT' | 'DELETE'
+
 
 ## схема:
 

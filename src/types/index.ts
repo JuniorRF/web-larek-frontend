@@ -21,8 +21,8 @@ export interface IModal {
 export interface IOrder {
     products: IProductItem[];
     totalPrice: number;
-    addProduct(): void;
-    deleteProduct(): void;
+    addProduct(id: string): void;
+    deleteProduct(id: string): void;
 }
 
 type paymentMethod = 'onlain'| 'cash'
@@ -32,8 +32,8 @@ export interface IUserData {
     address: string;
     email: string;
     telephone: string;
-    setPayment(): void;
-    setAddress(): void;
-    setEmail(): void;
-    setTelephone(): void;
+    setPayment(payment: string): void;
+    setAddress(address: string): void;
+    setEmail(email: string): void;
+    setTelephone(telephone: string): void;
 }
