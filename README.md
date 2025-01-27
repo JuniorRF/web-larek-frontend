@@ -90,4 +90,4 @@ export interface IUserData {
 
 ## схема:
 
-![схема](https://github.com/JuniorRF/web-larek-frontend/scheme.PNG "Схема")
+![схема](scheme.PNG "Схема")
