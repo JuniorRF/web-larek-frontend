@@ -52,7 +52,7 @@ yarn build
 ## Базовый код
 
 ### class Api:
-[src\components\base\api.ts](src\components\base\api.ts)
+[src/components/base/api.ts](src/components/base/api.ts)
 Запрос сервера о таварах
 методы: 'GET'|'POST' | 'PUT' | 'DELETE'
 
