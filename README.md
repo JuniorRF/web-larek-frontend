@@ -106,12 +106,12 @@ export interface IUserData {
 класс продуктов, будет выгружаться с сервера и заполняться страница или модальное окно
 ```
 export interface IProductItem {
-    "id": string,
-    "description": string,
-    "image": string,
-    "title": string,
-    "category": string,
-    "price": number
+    "id": string,  // Уникальный номер торвара
+    "description": string, // описание торвара
+    "image": string, // Ссылка на картинку торвара
+    "title": string, // Название торвара
+    "category": string, // Категория товара
+    "price": number // Цена товара
 }
 ```
 
@@ -160,11 +160,6 @@ export interface IUserData {
     setTelephone(telephone: string): void;
 }
 ```
-### class EventEmitter:
-слушатель событий от пользователя.
-
-
-
 
 ## схема:
 
