@@ -18,26 +18,52 @@ export interface IModal {
     close(): void;
 }
 
-export interface IOrder {
+export interface IOrder extends IUserData {
     products: IProductItem[];
     totalPrice: number;
     addProduct(id: string): void;
     deleteProduct(id: string): void;
 }
 
-type paymentMethod = 'onlain'| 'cash'
-
-export interface IUserData {
+interface IUserData{
     payment: paymentMethod;
     address: string;
     email: string;
     telephone: string;
+}
+
+type paymentMethod = 'onlain'| 'cash'
+
+export interface IUserDataClass extends IUserData {
     setPayment(payment: string): void;
     setAddress(address: string): void;
     setEmail(email: string): void;
     setTelephone(telephone: string): void;
 }
 
-export interface IApi {
-    
+export interface IApi<T> {
+    get(endpoint: string): Promise<T>;
+    post(endpoint: string, data: T): Promise<T>;
+}
+
+
+export interface IView<T> {
+    render(): void;
+    update(): void;
+    clear(): void;
+}
+
+export interface IProductView extends IView<IProductItem> {
+    displayProduct(product: IProductItem): void;
+    displayProductList(products: IProductItem[]): void;
+}
+
+export interface IOrderView extends IView<IOrder> {
+    displayOrder(order: IOrder): void;
+    displayOrderList(orders: IOrder[]): void;
+}
+
+export interface IUserView extends IView<IUserData> {
+    displayUserData(userData: IUserData): void;
+    displayEditForm(): void;
 }
