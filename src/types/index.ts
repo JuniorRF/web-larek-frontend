@@ -37,3 +37,7 @@ export interface IUserData {
     setEmail(email: string): void;
     setTelephone(telephone: string): void;
 }
+
+export interface IApi {
+    
+}

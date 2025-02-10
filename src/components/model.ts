@@ -1,12 +1,12 @@
-import { IProductItem } from "../types";
+// import { IProductItem } from "../types";
 
-export class ProductModel {
-    protected item:  IProductItem[] = [];
+// export class ProductModel {
+//     protected item:  IProductItem[] = [];
 
-    constructor() {}
+//     constructor() {}
 
-    addProduct(item: IProductItem) {}
+//     addProduct(item: IProductItem) {}
 
-    getProducts(): IProductItem[] {}
+//     getProducts(): IProductItem[] {}
     
-}
+// }

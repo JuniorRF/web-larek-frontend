@@ -21,8 +21,10 @@
 
 ### class Api:
 - [api.ts](src/components/base/api.ts)
-- Запрос сервера о таварах
-- методы: 'GET'|'POST' | 'PUT' | 'DELETE'
+- `constructor(baseUrl: string, options: RequestInit = {})`- принимает базовый URL и глобальные опции для всех запросов(опционально).
+- методы запроса на сервер: 'GET'|'POST' | 'PUT' | 'DELETE'
+- Методы класса:
+- - ```get``` запрос на получение карточек  
 
 ### class EventEmitter
 - [events.ts](src/components/base/events.ts)
