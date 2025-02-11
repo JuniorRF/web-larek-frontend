@@ -24,8 +24,8 @@
 - `constructor(baseUrl: string, options: RequestInit = {})`- принимает базовый URL и глобальные опции для всех запросов(опционально).
 - методы запроса на сервер: 'GET'|'POST' | 'PUT' | 'DELETE'
 - Методы класса:
-- - `get` запрос на получение одного или всех продуктов
-- - `post` отправляет на сервер информацию о пользователе, общую цену и список товаров
+- - `get` запрос на получение одного или всех продуктов `(enpoint)`
+- - `post` отправляет на сервер информацию о пользователе, общую цену и список товаров `(enpoint, data)`
 
 ### class EventEmitter
 - [events.ts](src/components/base/events.ts)
@@ -42,11 +42,13 @@
 
 **ЗАКАЗ:**
 - класс заказа, количество товаров и общая цена.
-- инициирует 
-- метод ```addProduct``` добавляет в заказ продукт
-- метод ```deleteProduct``` удаляет из заказа продукт
+- инициирует
+- - пустой список для товаров
+- - общая цена по умолчанию 0
+- метод ```addProduct``` добавляет в заказ продукт `(idProduct)`
+- метод ```deleteProduct``` удаляет из заказа продукт `(idProduct)`
 ```
-export interface IOrder {
+interface IOrder {
     products: IProductItem[];
     totalPrice: number;
     addProduct(id: string): void;
@@ -63,7 +65,7 @@ export interface IOrder {
 #### Методы ```set``` для установки значений
 
 ```
-export interface IUserData {
+IUserData {
     payment: paymentMethod;
     address: string;
     email: string;
@@ -78,7 +80,7 @@ export interface IUserData {
 **ПРОДУКТ:**
 класс продуктов, будет выгружаться с сервера и заполняться страница или модальное окно
 ```
-export interface IProductItem {
+IProductItem {
     "id": string,  // Уникальный номер торвара
     "description": string, // описание торвара
     "image": string, // Ссылка на картинку торвара
@@ -112,6 +114,19 @@ export interface IModal {
     close(): void;
 }
 ```
+
+**Слой отображения:**
+общий абстрактный класс:
+```
+interface IView<T> {
+    render(): void;
+    update(): void;
+    clear(): void;
+}
+```
+от него наследуются главной страницы, корзины, отдельного продукта и окон для заказа
+ 
+
 Важные файлы:
 - src/pages/index.html — HTML-файл главной страницы
 - src/types/index.ts — файл с типами

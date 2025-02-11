@@ -43,7 +43,7 @@ export interface IUserDataClass extends IUserData {
 
 export interface IApi<T> {
     get(endpoint: string): Promise<T>;
-    post(endpoint: string, data: T): Promise<T>;
+    post(endpoint: string, data: <T>): Promise<T>;
 }
 
 
