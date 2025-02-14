@@ -7,7 +7,7 @@ export interface IProductItem {
     "price": number
 }
 
-export interface IProductList {
+export interface IProductsGetApi {
     "total": number;
     "items": IProductItem[];
 }
@@ -18,12 +18,7 @@ export interface IModal {
     close(): void;
 }
 
-export interface IOrder extends IUserData {
-    products: IProductItem[];
-    totalPrice: number;
-    addProduct(id: string): void;
-    deleteProduct(id: string): void;
-}
+type paymentMethod = 'onlain'| 'cash'
 
 interface IUserData{
     payment: paymentMethod;
@@ -32,7 +27,14 @@ interface IUserData{
     telephone: string;
 }
 
-type paymentMethod = 'onlain'| 'cash'
+export interface IOrder extends IUserData {
+    products: IProductItem[];
+    totalPrice: number;
+    addProduct(id: string): void;
+    deleteProduct(id: string): void;
+}
+
+
 
 export interface IUserDataClass extends IUserData {
     setPayment(payment: string): void;
@@ -43,7 +45,7 @@ export interface IUserDataClass extends IUserData {
 
 export interface IApi<T> {
     get(endpoint: string): Promise<T>;
-    post(endpoint: string, data: <T>): Promise<T>;
+    post(endpoint: string, data: T): Promise<T>;
 }
 
 

@@ -1,12 +1,17 @@
-// import { IProductItem } from "../types";
+import { IProductItem } from "../types";
 
-// export class ProductModel {
-//     protected item:  IProductItem[] = [];
+export class ProductModel {
+    protected products:  IProductItem[] = [];
 
-//     constructor() {}
+    setProducts(products: IProductItem[]) {
+        this.products = products
+    }
 
-//     addProduct(item: IProductItem) {}
-
-//     getProducts(): IProductItem[] {}
+    getProducts(): IProductItem[] {
+        return this.products
+    }
     
-// }
+    getProduct(id:string): IProductItem | undefined {
+        return this.products.find(product => product.id === id);
+    }
+}
