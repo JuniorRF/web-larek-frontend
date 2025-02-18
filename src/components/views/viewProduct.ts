@@ -1,27 +1,40 @@
 import { IProductItem } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
+import { IEvents } from "../base/events";
 
 export class ProductView extends Component<IProductItem> {
-    private category: HTMLElement;
-    private image: HTMLImageElement;
-    private title: HTMLElement;
-    private price: HTMLElement;
+    protected cardId: string;
+    protected events: IEvents;
+    protected category: HTMLElement;
+    protected image: HTMLImageElement;
+    protected title: HTMLElement;
+    protected price: HTMLElement;
 
-    constructor(container: HTMLElement) {
+    constructor(container: HTMLElement, events: IEvents) {
         super(container);
+        this.events = events;
         this.category = ensureElement<HTMLElement>('.card__category', this.container);
         this.image = ensureElement<HTMLImageElement>('.card__image', this.container);
         this.title = ensureElement<HTMLElement>('.card__title', this.container);
         this.price = ensureElement<HTMLElement>('.card__price', this.container);
+
+        this.container.addEventListener('click', () => {
+            this.events.emit('card:select', {id: this.cardId});
+        });
     }
 
     render(data: IProductItem): HTMLElement {
+        this.id = data.id;
         this.cardCategory = data.category;
         this.cardImage = data.image;
         this.cardTitle = data.title;
         this.cardPrice = data.price;
         return this.container;
+    }
+
+    set id(value: string) {
+        this.cardId = value;
     }
 
     set cardTitle(value: string) {
