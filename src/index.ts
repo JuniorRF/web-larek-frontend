@@ -29,7 +29,7 @@ const events = new EventEmitter();
 const productModel = new ProductModel(events);
 const pageView = new PageView(document.querySelector('.page__wrapper') as HTMLElement);
 
-const api = new ProductApi(API_URL)
+const api = new ProductApi(API_URL, CDN_URL)
 api.getProducts().then((data)=>{
     productModel.setProducts(data);
     
@@ -63,14 +63,14 @@ apiImage.get('/images').then((data)=>{
 
 // new Product(cloneTemplate(templateCard)).render()
 
-// events.on('products:loaded', () => {
-//     const productsArray = productModel.getProducts()
-//         .map(item => new ProductView(cloneTemplate(templateCard)).render(item));
-//     console.log(productsArray);
-//     pageView.render({
-//         productslist: productsArray,
-//         basketCount: 110
-//     });
-// });
+events.on('products:loaded', () => {
+    const productsArray = productModel.getProducts()
+        .map(item => new ProductView(cloneTemplate(templateCard)).render(item));
+    console.log(productsArray);
+    pageView.render({
+        productslist: productsArray,
+        basketCount: 0
+    });
+});
 
 
