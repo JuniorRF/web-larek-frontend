@@ -7,13 +7,19 @@ export interface IProductItem {
     "price": number
 }
 
+export interface IProductToCart {
+    "index": number,
+    "title": string,
+    "price": number,
+    "id": string
+}
+
 export interface IProductsGetApi {
     "total": number;
     "items": IProductItem[];
 }
 
 export interface IModal {
-    "modal": string;
     open(): void;
     close(): void;
 }

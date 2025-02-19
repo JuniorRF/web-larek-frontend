@@ -12,17 +12,17 @@ interface IPageView {
 export class PageView extends Component<IPageView> {
     protected events: IEvents;
     protected productsContainer: HTMLElement;
-    protected basketCounterElement: HTMLElement;
-    protected basketElement: HTMLElement;
+    // protected basketCounterElement: HTMLElement;
+    // protected basketElement: HTMLElement;
 
     constructor(container: HTMLElement, events: IEvents) {
         super(container);
+        console.log('PageView container:', this.container);
         this.events = events;
         this.productsContainer = ensureElement('.gallery', this.container);
-        this.basketCounterElement = ensureElement('.header__basket-counter', this.container);
-        this.basketElement = ensureElement('.header__basket', this.container);
+        // this.basketCounterElement = ensureElement('.header__basket-counter', this.container);
+        // this.basketElement = ensureElement('.header__basket', this.container);
 
-        this.basketElement.addEventListener('click', () => this.events.emit('basket:click'));
     }
 
     // set productsList(value: HTMLElement[]) {
@@ -33,11 +33,10 @@ export class PageView extends Component<IPageView> {
     //     this.basketElement.textContent = value.toString();
     // }
 
-    render(data: { productslist: HTMLElement[], basketCount: number }): HTMLElement {
+    render(data: { productslist: HTMLElement[] }): HTMLElement {
         this.productsContainer.replaceChildren(...data.productslist);
         
         
-        this.basketCounterElement.textContent = data.basketCount.toString();
         
         return this.container;
     }
