@@ -46,4 +46,8 @@ export class ProductModel {
             this.events.emit('cart:remove', { id });
         }
     }
+
+    getFullPrice(): number {
+        return this.buyProducts.reduce((acc, product) => acc + product.price, 0);
+    }
 }

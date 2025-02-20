@@ -50,4 +50,6 @@ export class ProductModal extends Modal {
             this.buttonBuy.disabled = false;
         }
     }
+
+    
 }

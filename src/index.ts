@@ -78,8 +78,9 @@ events.on('cart:open', () => {
     const productsToCart = products.map((item, idx) => 
         new ProductsToCart(cloneTemplate(templateCardBasket), events).render(item)
     );
+    const fullPrice = productModel.getFullPrice();
     console.log(templateCardBasket);
-    cartModal.show(productsToCart, templateBasket);
+    cartModal.show(productsToCart, templateBasket, fullPrice);
     
 });
 
@@ -90,7 +91,7 @@ events.on('modal:open', () => {
 
 events.on('modal:close', () => {
     console.log('Modal closed');
-    console.log(productModel.getBuyProductsCount());
+    // console.log(productModel.getBuyProductsCount());
     
 });
 
@@ -105,6 +106,11 @@ events.on('cart:deleteItem', (data: {id: string}) => {
     cart.basketCount = productModel.getBuyProductsCount();
 });
 
+
+events.on('cart:buy', () => {
+    console.log('cart:buy');
+    // modal.open(templateOrder, templateContacts);
+});
 
 
 

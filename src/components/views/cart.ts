@@ -31,23 +31,23 @@ export class Cart extends Component<IProductToCart> {
 export class CartModal extends Modal {
     private title: HTMLElement;
     private listItems: HTMLElement;
-    private buttonOrder: HTMLElement;
+    private buttonOrder: HTMLButtonElement;
     private price: HTMLElement;
 
-    public show(products: HTMLElement[], template: HTMLTemplateElement): void {
+    public show(products: HTMLElement[], template: HTMLTemplateElement, fullPrice: number): void {
         const content = cloneTemplate(template);
         this.setContent(content);
+        console.log(products);
 
-        // Инициализируем элементы
         this.title = ensureElement<HTMLElement>('.modal__title', this.content);
         this.listItems = ensureElement<HTMLElement>('.basket__list', this.content);
-        this.buttonOrder = ensureElement<HTMLElement>('.basket__button', this.content);
+        this.buttonOrder = ensureElement<HTMLButtonElement>('.basket__button', this.content);
         this.price = ensureElement<HTMLElement>('.basket__price', this.content);
 
-        // Устанавливаем товары
         this.items = products;  // используем сеттер
+        this.price.textContent = `${fullPrice} синапсов`;
+        this.disableButton = fullPrice;
 
-        // Добавляем обработчик на кнопку покупки
         this.buttonOrder.addEventListener('click', () => {
             this.events.emit('cart:buy', { products: this.listItems });
         });
@@ -58,7 +58,16 @@ export class CartModal extends Modal {
     set items(value: HTMLElement[]) {
         this.listItems.replaceChildren(...value);
     }
+
+    set disableButton(fullPrice: number) {
+        if(fullPrice === 0) {
+            this.buttonOrder.disabled = true;
+        } else {
+            this.buttonOrder.disabled = false;
+        }
+    }
 }
+
 
 export class ProductsToCart extends Component<IProductToCart> {
     private cardId: string;
@@ -101,11 +110,7 @@ export class ProductsToCart extends Component<IProductToCart> {
             this.setText(this.price, '0');
         }
     }
-    
-    
 
-    
-    
     render(data: IProductToCart): HTMLElement {
         this.indexElement = data.index;
         this.titleElement = data.title;
