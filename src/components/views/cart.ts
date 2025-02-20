@@ -44,7 +44,7 @@ export class CartModal extends Modal {
         this.buttonOrder = ensureElement<HTMLButtonElement>('.basket__button', this.content);
         this.price = ensureElement<HTMLElement>('.basket__price', this.content);
 
-        this.items = products;  // используем сеттер
+        this.items = products;
         this.price.textContent = `${fullPrice} синапсов`;
         this.disableButton = fullPrice;
 

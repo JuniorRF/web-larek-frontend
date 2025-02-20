@@ -1,7 +1,7 @@
 import './scss/styles.scss';
 
 import { ProductApi } from './components/apiProducts';
-import { ProductModel } from './components/model';
+import { ProductModel } from './components/models/model';
 import { API_URL, CDN_URL } from './utils/constants';
 import { Api } from './components/base/api';
 import { ProductView } from './components/views/viewProduct';
@@ -9,10 +9,12 @@ import { cloneTemplate } from './utils/utils';
 import { EventEmitter } from './components/base/events';
 import { PageView } from './components/views/viewPage';
 import { ProductModal } from './components/views/productModal';
-import { IProductItem } from './types';
+import { IProductItem, paymentMethod } from './types';
 import { Modal } from './components/views/modal';
 import { Cart, CartModal, ProductsToCart } from './components/views/cart';
-
+import { OrderModal } from './components/views/order';
+import { UserModel } from './components/models/user';
+import { ContactsModal } from './components/views/contacts';
 
 const templateCard = document.querySelector('#card-catalog') as HTMLTemplateElement;
 
@@ -33,8 +35,9 @@ const pageView = new PageView(document.querySelector('.page__wrapper') as HTMLEl
 const productModal = new ProductModal(modalContainer, events);
 const cart = new Cart(document.querySelector('.header__container') as HTMLElement, events);
 const cartModal = new CartModal(modalContainer, events);
-
-
+const orderModal = new OrderModal(modalContainer, events);
+const userData = new UserModel();
+const contactsModal = new ContactsModal(modalContainer, events);
 
 const api = new ProductApi(API_URL, CDN_URL)
 api.getProducts().then((data)=>{
@@ -84,7 +87,6 @@ events.on('cart:open', () => {
     
 });
 
-// Проверяем, что события работают
 events.on('modal:open', () => {
     console.log('Modal opened');
 });
@@ -109,15 +111,18 @@ events.on('cart:deleteItem', (data: {id: string}) => {
 
 events.on('cart:buy', () => {
     console.log('cart:buy');
-    // modal.open(templateOrder, templateContacts);
+    orderModal.show(templateOrder);
 });
 
 
+events.on('order:submit', (data: {payment: paymentMethod, address: string}) => {
+    console.log('contacts:open', data);
+    userData.setPayment(data.payment);
+    userData.setAddress(data.address);
 
-
-
-
-
+    contactsModal.show(templateContacts);
+    console.log(userData);
+});
 
 
 

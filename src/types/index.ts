@@ -24,9 +24,9 @@ export interface IModal {
     close(): void;
 }
 
-type paymentMethod = 'onlain'| 'cash'
+export type paymentMethod = 'card'| 'cash'
 
-interface IUserData{
+export interface IUserData{
     payment: paymentMethod;
     address: string;
     email: string;

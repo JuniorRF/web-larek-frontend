@@ -1,5 +1,6 @@
-import { IProductItem } from "../types";
-import { IEvents } from "./base/events";
+import { IProductItem } from "../../types";
+import { IEvents } from "../base/events";
+
 
 export class ProductModel {
     protected products:  IProductItem[] = [];
