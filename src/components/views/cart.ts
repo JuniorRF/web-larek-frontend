@@ -1,7 +1,5 @@
-import { ensureElement } from "../../utils/utils";
-
-import { IProductItem, IProductToCart } from "../../types";
-import { cloneTemplate } from "../../utils/utils";
+import { ensureElement, cloneTemplate } from "../../utils/utils";
+import { IProductToCart } from "../../types";
 import { Modal } from "./modal";
 import { Component } from "../base/Component";
 import { IEvents } from "../base/events";
@@ -29,17 +27,14 @@ export class Cart extends Component<IProductToCart> {
 }
 
 export class CartModal extends Modal {
-    private title: HTMLElement;
-    private listItems: HTMLElement;
-    private buttonOrder: HTMLButtonElement;
-    private price: HTMLElement;
+    protected listItems: HTMLElement;
+    protected buttonOrder: HTMLButtonElement;
+    protected price: HTMLElement;
 
-    public show(products: HTMLElement[], template: HTMLTemplateElement, fullPrice: number): void {
-        const content = cloneTemplate(template);
-        this.setContent(content);
+    show(products: HTMLElement[], template: HTMLTemplateElement, fullPrice: number): void {
+        this.setContent(template);
         console.log(products);
 
-        this.title = ensureElement<HTMLElement>('.modal__title', this.content);
         this.listItems = ensureElement<HTMLElement>('.basket__list', this.content);
         this.buttonOrder = ensureElement<HTMLButtonElement>('.basket__button', this.content);
         this.price = ensureElement<HTMLElement>('.basket__price', this.content);
@@ -70,15 +65,15 @@ export class CartModal extends Modal {
 
 
 export class ProductsToCart extends Component<IProductToCart> {
-    private cardId: string;
-    private index: HTMLElement;
-    private title: HTMLElement;
-    private price: HTMLElement;
-    private buttonDelete: HTMLElement;
-    private events: IEvents;
+    protected cardId: string;
+    protected index: HTMLElement;
+    protected title: HTMLElement;
+    protected price: HTMLElement;
+    protected buttonDelete: HTMLElement;
+    protected events: IEvents;
 
     constructor(container: HTMLElement, events: IEvents) {
-        super(  container);
+        super(container);
         this.events = events;
         this.index = ensureElement<HTMLElement>('.basket__item-index', this.container);
         this.title = ensureElement<HTMLElement>('.card__title', this.container);

@@ -6,10 +6,11 @@ import { IEvents } from "../base/events";
 export class ProductView extends Component<IProductItem> {
     protected cardId: string;
     protected events: IEvents;
-    protected category: HTMLElement;
     protected image: HTMLImageElement;
     protected title: HTMLElement;
     protected price: HTMLElement;
+    protected category: HTMLElement;
+    
 
     constructor(container: HTMLElement, events: IEvents) {
         super(container);
@@ -42,7 +43,26 @@ export class ProductView extends Component<IProductItem> {
     }
 
     set cardCategory(value: string) {
-        this.setText(this.category, value)
+        this.setText(this.category, value);
+        const className = 'card__category card__category_'
+        switch(value) {
+            case 'дополнительное':
+                this.category.className = className + 'additional';
+                break;
+            case 'софт-скил':
+                this.category.className = className + 'soft';
+                break;
+            case 'кнопка':
+                this.category.className = className + 'button';
+                break;
+            case 'хард-скил':
+                this.category.className = className + 'hard';
+                break;
+            case 'другое':
+                this.category.className = className + 'other';
+                break;
+        }
+
     }
 
     set cardImage(path: string) {

@@ -30,17 +30,8 @@ export interface IUserData{
     payment: paymentMethod;
     address: string;
     email: string;
-    telephone: string;
+    phone: string;
 }
-
-export interface IOrder extends IUserData {
-    products: IProductItem[];
-    totalPrice: number;
-    addProduct(id: string): void;
-    deleteProduct(id: string): void;
-}
-
-
 
 export interface IUserDataClass extends IUserData {
     setPayment(payment: string): void;
@@ -75,3 +66,21 @@ export interface IUserView extends IView<IUserData> {
     displayUserData(userData: IUserData): void;
     displayEditForm(): void;
 }
+
+export interface IOrder extends IUserData {
+    products: IProductItem[];
+    totalPrice: number;
+    addProduct(id: string): void;
+    deleteProduct(id: string): void;
+}
+
+
+export interface IApiOrder extends IUserData {
+    "items": string[],
+    "total": number,
+}
+
+export interface IApiOrderResponse {
+    id: string;
+    total: number;
+  }

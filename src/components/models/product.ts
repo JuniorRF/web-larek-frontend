@@ -5,7 +5,6 @@ import { IEvents } from "../base/events";
 export class ProductModel {
     protected products:  IProductItem[] = [];
     protected buyProducts: IProductItem[] = [];
-    // private events: IEvents;
 
     constructor(protected events: IEvents) {
         this.events = events;
@@ -28,12 +27,15 @@ export class ProductModel {
         const product = this.getProduct(id);
         if (product && !this.buyProducts.find(item => item.id === id)) {
             this.buyProducts.push(product);
-            // this.events.emit('cart:add', {id: id});
         }
     }
 
     getBuyProducts(): IProductItem[] {
         return this.buyProducts;
+    }
+
+    getBuyForApi(): string[] {
+        return this.buyProducts.map(item => (item.id));
     }
 
     getBuyProductsCount(): number {
@@ -50,5 +52,9 @@ export class ProductModel {
 
     getFullPrice(): number {
         return this.buyProducts.reduce((acc, product) => acc + product.price, 0);
+    }
+
+    clearBuyProducts(): void {
+        this.buyProducts = [];
     }
 }

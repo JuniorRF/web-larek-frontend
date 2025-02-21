@@ -1,4 +1,4 @@
-import { IProductItem, IProductsGetApi } from "../types";
+import { IApiOrder, IApiOrderResponse, IProductItem, IProductsGetApi } from "../types";
 import { Api, ApiListResponse } from "./base/api";
 
 export class ProductApi extends Api {
@@ -16,7 +16,7 @@ export class ProductApi extends Api {
         data.items.map((item) => ({...item, image: this.cdn + item.image})));
 }
 
-//   postOrderLot(order: IOrderLot): Promise<IProductsGetApi> {
-//     return this.post(`/order`, order).then((data: IOrderResult) => data);
-//   }
+  postOrder(order: IApiOrder): Promise<IApiOrderResponse> {
+    return this.post(`/order`, order).then((data: IApiOrderResponse) => data);
+  }
 }

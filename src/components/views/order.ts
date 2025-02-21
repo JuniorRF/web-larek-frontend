@@ -9,8 +9,7 @@ export class OrderModal extends Modal {
     protected formOrder: HTMLFormElement;
 
     show(template: HTMLTemplateElement): void {
-        const content = cloneTemplate(template);
-        this.setContent(content);
+        this.setContent(template);
 
         this.buttonSubmit = ensureElement<HTMLButtonElement>('.order__button', this.content);
         this.payment = ensureAllElements<HTMLButtonElement>('.button_alt', this.content);
@@ -45,13 +44,13 @@ export class OrderModal extends Modal {
         this.open();
     }
 
-    private setPaymentMethod(method: string): void {
+    protected setPaymentMethod(method: string): void {
         this.payment.forEach(item => {
             item.classList.toggle('button_alt-active', item.name === method);
         });
     }
 
-    private isFormValid(): boolean {
+    protected isFormValid(): boolean {
         const addressInput = this.formOrder.querySelector('[name="address"]') as HTMLInputElement;
         return addressInput?.value.length > 0;
     }

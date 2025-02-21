@@ -1,14 +1,64 @@
-import { cloneTemplate } from "../../utils/utils";
+import { cloneTemplate, ensureElement } from "../../utils/utils";
 import { Modal } from "./modal";
 
 export class ContactsModal extends Modal {
     protected buttonSubmit: HTMLButtonElement;
-    protected formOrder: HTMLFormElement;
+    protected formContacts: HTMLFormElement;
+    protected emailError: HTMLElement;
+    protected phoneError: HTMLElement;
 
     show(template: HTMLTemplateElement): void {
-        const content = cloneTemplate(template);
-        this.setContent(content);
+        this.setContent(template);
         
+        this.buttonSubmit = ensureElement<HTMLButtonElement>('.button', this.content);
+        this.formContacts = ensureElement<HTMLFormElement>('form[name="contacts"]', this.content);
+        this.emailError = ensureElement<HTMLElement>('.form__errors_email', this.content);
+        this.phoneError = ensureElement<HTMLElement>('.form__errors_phone', this.content);
+
+        this.formContacts.addEventListener('input', (event: Event) => {
+            const input = event.target as HTMLInputElement;
+            if (input.name === 'email') {
+                this.validateEmail(input);
+            }
+            if (input.name === 'phone') {
+                this.validatePhone(input);
+            }
+            this.buttonSubmit.disabled = !this.isFormValid();
+        });
+
+        this.formContacts.addEventListener('submit', (event: Event) => {
+            event.preventDefault();
+            const emailInput = this.formContacts.querySelector('input[name="email"]') as HTMLInputElement;  
+            const phoneInput = this.formContacts.querySelector('input[name="phone"]') as HTMLInputElement;
+            this.events.emit('contacts:submit', {
+                email: emailInput.value,
+                phone: phoneInput.value
+            });
+
+        });
+
+        this.open();
+    }
+
+    protected validateEmail(input: HTMLInputElement): void {
+        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
+        this.emailError.textContent = !input.value ? 'Необходимо указать email' : 
+                                    !isValid ? 'Неверный формат email' : '';
+    }
+
+    protected validatePhone(input: HTMLInputElement): void {
+        const phoneDigits = input.value.replace(/\D/g, '');
+        this.phoneError.textContent = !input.value ? 'Необходимо указать телефон' : 
+                                    phoneDigits.length !== 11 ? 'Неверный формат телефона' : '';
+    }
+
+    protected isFormValid(): boolean {
+        const emailInput = this.formContacts.querySelector('input[name="email"]') as HTMLInputElement;
+        const phoneInput = this.formContacts.querySelector('input[name="phone"]') as HTMLInputElement;
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+        const phoneDigits = phoneInput.value.replace(/\D/g, '');
+        const phoneValid = phoneDigits.length === 11;
+        return emailValid && phoneValid;
     }
 }
 
