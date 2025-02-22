@@ -37,7 +37,7 @@ export class ContactsModal extends Modal {
 
         });
 
-        this.open();
+        // this.open();
     }
 
     protected validateEmail(input: HTMLInputElement): void {

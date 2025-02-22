@@ -33,7 +33,6 @@ export class CartModal extends Modal {
 
     show(products: HTMLElement[], template: HTMLTemplateElement, fullPrice: number): void {
         this.setContent(template);
-        console.log(products);
 
         this.listItems = ensureElement<HTMLElement>('.basket__list', this.content);
         this.buttonOrder = ensureElement<HTMLButtonElement>('.basket__button', this.content);

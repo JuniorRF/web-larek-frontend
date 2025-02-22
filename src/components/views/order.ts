@@ -9,8 +9,6 @@ export class OrderModal extends Modal {
     protected formOrder: HTMLFormElement;
     protected addressError: HTMLElement;
 
-    
-
     show(template: HTMLTemplateElement): void {
         this.setContent(template);
 
@@ -39,20 +37,19 @@ export class OrderModal extends Modal {
         this.formOrder.addEventListener('submit', (event: Event) => {
             event.preventDefault();
             const payment = this.payment.find(item => item.classList.contains('button_alt-active')).name;
-            const addressInput = this.formOrder.querySelector('input[name="address"]') as HTMLInputElement;
             this.events.emit('order:submit', {
                 payment: payment,
-                address: addressInput.value
+                address: this.formOrder.address.value
             });
         });
 
-        this.open();
+        // this.open();
     }
 
     protected validateAddress(input: HTMLInputElement): void {
         const isValid = input.value.length > 3;
-        this.addressError.textContent = !input.value ? 'Необходимо указать адрес' : 
-                                    !isValid ? 'Адрес должен быть не менее 3 символов' : '';
+            this.setText(this.addressError, !input.value ? 'Необходимо указать адрес' : 
+                                        !isValid ? 'Адрес должен быть не менее 3 символов' : '');
     }
 
     protected setPaymentMethod(method: string): void {
@@ -62,8 +59,7 @@ export class OrderModal extends Modal {
     }
 
     protected isFormValid(): boolean {
-        const addressInput = this.formOrder.querySelector('[name="address"]') as HTMLInputElement;
-        return addressInput?.value.length > 3;
+        return this.formOrder.address.value.length > 3;
     }
 }
 

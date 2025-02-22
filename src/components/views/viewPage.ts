@@ -14,7 +14,6 @@ export class PageView extends Component<IPageView> {
 
     constructor(container: HTMLElement, events: IEvents) {
         super(container);
-        console.log('PageView container:', this.container);
         this.events = events;
         this.productsContainer = ensureElement('.gallery', this.container);
     }

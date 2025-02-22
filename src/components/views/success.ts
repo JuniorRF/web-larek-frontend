@@ -1,21 +1,32 @@
-import { cloneTemplate, ensureElement } from "../../utils/utils";
+import {  ensureElement } from "../../utils/utils";
+import { IEvents } from "../base/events";
 import { Modal } from "./modal";
 
 export class SuccessModal extends Modal {
-    protected buttonClose: HTMLButtonElement;
+    protected buttonSuccess: HTMLButtonElement;
     protected price: HTMLParagraphElement;
 
-    show(template: HTMLTemplateElement, price: number): void {
-        this.setContent(template);
+    // constructor(container: HTMLElement, events: IEvents ) {
+    //     super(container, events);
+        // this.setContent(template);
 
-        this.buttonClose = ensureElement<HTMLButtonElement>('.order-success__close', this.content);
+       
+
+        
+
+    show(template: HTMLTemplateElement, price: number): void {
+
+        this.setContent(template);
+        this.buttonSuccess = ensureElement<HTMLButtonElement>('.order-success__close', this.content);
         this.price = ensureElement<HTMLParagraphElement>('.order-success__description', this.content);
+        
 
         
         this.price.textContent = `Списано ${price} синапсов`;
-
-        this.buttonClose.addEventListener('click', () => {
-            this.events.emit('succes:ok');
+        
+        this.buttonSuccess.addEventListener('click', () => {
+            this.events.emit('success:ok');
         });
+        // this.open();
     }
 }
