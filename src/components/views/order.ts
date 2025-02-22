@@ -9,6 +9,8 @@ export class OrderModal extends Modal {
     protected formOrder: HTMLFormElement;
     protected addressError: HTMLElement;
 
+    
+
     show(template: HTMLTemplateElement): void {
         this.setContent(template);
 
@@ -20,9 +22,9 @@ export class OrderModal extends Modal {
         this.setPaymentMethod('card');
         
 
-        this.payment.forEach((item) => {
-            item.addEventListener('click', () => {
-                this.setPaymentMethod(item.name);
+        this.payment.forEach(button => {
+            button.addEventListener('click', () => {
+                this.payment.forEach(item => this.toggleClass(item, 'button_alt-active', item === button));
             });
         });
 
@@ -31,7 +33,7 @@ export class OrderModal extends Modal {
             if (input.name === 'address') {
                 this.validateAddress(input);
             }
-            this.buttonSubmit.disabled = !this.isFormValid();
+            this.setDisabled(this.buttonSubmit, !this.isFormValid());
         });
       
         this.formOrder.addEventListener('submit', (event: Event) => {
@@ -55,7 +57,7 @@ export class OrderModal extends Modal {
 
     protected setPaymentMethod(method: string): void {
         this.payment.forEach(item => {
-            item.classList.toggle('button_alt-active', item.name === method);
+            this.toggleClass(item, 'button_alt-active', item.name === method);
         });
     }
 

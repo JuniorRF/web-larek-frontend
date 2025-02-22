@@ -111,6 +111,7 @@ export class ProductsToCart extends Component<IProductToCart> {
         this.titleElement = data.title;
         this.priceElement = data.price;
         this.id = data.id;
+        // super.render(data)  // вот так все сеттеры можно установить, если они совпадают с полями объекта
         return this.container;
     }
 }
