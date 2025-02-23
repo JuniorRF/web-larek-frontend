@@ -9,6 +9,11 @@ export class OrderModal extends Modal {
     protected formOrder: HTMLFormElement;
     protected addressError: HTMLElement;
 
+    // constructor(container: HTMLElement, events: IEvents, template: HTMLTemplateElement) {
+    //     super(container, events);
+    //     this.setContent(template);
+    // }
+
     show(template: HTMLTemplateElement): void {
         this.setContent(template);
 
@@ -36,9 +41,8 @@ export class OrderModal extends Modal {
       
         this.formOrder.addEventListener('submit', (event: Event) => {
             event.preventDefault();
-            const payment = this.payment.find(item => item.classList.contains('button_alt-active')).name;
             this.events.emit('order:submit', {
-                payment: payment,
+                payment: this.payment.find(item => item.classList.contains('button_alt-active')).name,
                 address: this.formOrder.address.value
             });
         });

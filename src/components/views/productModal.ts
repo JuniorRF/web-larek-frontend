@@ -5,7 +5,7 @@ import { BaseProduct } from "./poductBase";
 import { IEvents } from "../base/events";
 
 
-export class ProsuctForModal extends BaseProduct {
+export class ProductForModal extends BaseProduct {
     private buttonBuy: HTMLButtonElement;
     private descriptionElement: HTMLElement;
 

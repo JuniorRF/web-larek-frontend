@@ -13,8 +13,8 @@ import { Cart, CartModal, ProductsToCart } from './components/views/cart';
 import { OrderModal } from './components/views/order';
 import { UserModel } from './components/models/user';
 import { ContactsModal } from './components/views/contacts';
-import { SuccessModal } from './components/views/success';
-import { ProsuctForModal } from './components/views/productModal';
+import { SuccessModalNew } from './components/views/success';
+import { ProductForModal } from './components/views/productModal';
 
 
 const templateCard = document.querySelector('#card-catalog') as HTMLTemplateElement;
@@ -38,39 +38,31 @@ const cartModal = new CartModal(modalContainer, events);
 const orderModal = new OrderModal(modalContainer, events);
 const userData = new UserModel();
 const contactsModal = new ContactsModal(modalContainer, events);
-const successModal = new SuccessModal(modalContainer, events);
 
 const api = new ProductApi(API_URL, CDN_URL)
 api.getProducts().then((data)=>{
     productModel.setProducts(data);
 })
-.catch((err)=>{
-    console.error(err);
-});
+.catch(console.error)
 
 
 events.on(EVENTS_ENUM.PRODUCTS_LOADED, () => {
     const productsArray = productModel.getProducts()
         .map(item => new ProductView(cloneTemplate(templateCard), events).render(item));
-    
-    pageView.render({
-        productslist: productsArray,
-    });
+    pageView.render({productslist: productsArray});
 });
 
 
 events.on(EVENTS_ENUM.CARD_SELECT, (data: {id: string}) => {
     const item = productModel.getProduct(data.id);
-    const product = new ProsuctForModal(cloneTemplate(templateCardPreview), events, item.price).render(item);
+    const product = new ProductForModal(cloneTemplate(templateCardPreview), events, item.price).render(item);
     modal.setContentHTML(product);
-    console.log(product);;
     modal.open();
 });
 
 
 events.on(EVENTS_ENUM.PRODUCT_ADD, (item: { id: string }) => {
     productModel.addToBuyProducts(item.id);
-    console.log('product:add', item);
     cart.basketCount = productModel.getBuyProductsCount();
     modal.close();
 });
@@ -97,7 +89,7 @@ events.on(EVENTS_ENUM.CART_BUY, () => {
 });
 
 
-events.on('order:submit', (data: {payment: paymentMethod, address: string}) => {
+events.on(EVENTS_ENUM.ORDER_SUBMIT, (data: {payment: paymentMethod, address: string}) => {
     userData.setPayment(data.payment);
     userData.setAddress(data.address);
     contactsModal.show(templateContacts);
@@ -113,11 +105,11 @@ events.on(EVENTS_ENUM.CONTACTS_SUBMIT, (data: {email: string, phone: string}) =>
         total: productModel.getFullPrice(),
     };
     api.postOrder(order).then(()=>{
-        successModal.show(templateOrderSuccess, productModel.getFullPrice());
+        const successModalNew = new SuccessModalNew(cloneTemplate(templateOrderSuccess), events).render({price: productModel.getFullPrice()});
+        modal.setContentHTML(successModalNew);
+        modal.open();
     })
-    .catch((err)=>{
-        console.error(err);
-    });
+    .catch(console.error)
 });
 
 
@@ -126,57 +118,3 @@ events.on(EVENTS_ENUM.SUCCESS_OK, () => {
     cart.basketCount = productModel.getBuyProductsCount();
     modal.close();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const gallery = document.querySelector('.gallery') as HTMLElement;
-// const card = new ProductView(cloneTemplate(templateCard));
-// const obj = {
-//     "id": '1',
-//     "description": 'test',
-//     "image": './images/Subtract.svg',
-//     "title": 'test',
-//     "category": 'test',
-//     "price": 100,
-//     // добавленые поля
-//     "text": 'text',
-//     "button": 'buy',
-// }
-// gallery.append(card.render(obj));
-
-// const productPreview = new ProductPreview(cloneTemplate(templateCardPreview));
-// modalContainer.append(productPreview.render(obj));
-// modalContainer.classList.add('modal_active');
-
-// new Product(cloneTemplate(templateCard)).render()

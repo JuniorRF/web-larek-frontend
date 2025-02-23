@@ -23,16 +23,14 @@ export class ContactsModal extends Modal {
             if (input.name === 'phone') {
                 this.validatePhone(input);
             }
-            this.buttonSubmit.disabled = !this.isFormValid();
+            this.setDisabled(this.buttonSubmit, !this.isFormValid());
         });
 
         this.formContacts.addEventListener('submit', (event: Event) => {
             event.preventDefault();
-            const emailInput = this.formContacts.querySelector('input[name="email"]') as HTMLInputElement;  
-            const phoneInput = this.formContacts.querySelector('input[name="phone"]') as HTMLInputElement;
             this.events.emit('contacts:submit', {
-                email: emailInput.value,
-                phone: phoneInput.value
+                email: this.formContacts.email.value,
+                phone: this.formContacts.phone.value
             });
 
         });
@@ -42,14 +40,14 @@ export class ContactsModal extends Modal {
 
     protected validateEmail(input: HTMLInputElement): void {
         const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
-        this.emailError.textContent = !input.value ? 'Необходимо указать email' : 
-                                    !isValid ? 'Неверный формат email' : '';
+        this.setText(this.emailError, !input.value ? 'Необходимо указать email' : 
+            !isValid ? 'Неверный формат email' : '');
     }
 
     protected validatePhone(input: HTMLInputElement): void {
         const phoneDigits = input.value.replace(/\D/g, '');
-        this.phoneError.textContent = !input.value ? 'Необходимо указать телефон' : 
-                                    phoneDigits.length !== 11 ? 'Неверный формат телефона' : '';
+        this.setText(this.phoneError, !input.value ? 'Необходимо указать телефон' : 
+            phoneDigits.length !== 11 ? 'Неверный формат телефона' : '');
     }
 
     protected isFormValid(): boolean {

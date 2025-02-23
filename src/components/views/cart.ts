@@ -39,7 +39,7 @@ export class CartModal extends Modal {
         this.price = ensureElement<HTMLElement>('.basket__price', this.content);
 
         this.items = products;
-        this.price.textContent = `${fullPrice} синапсов`;
+        this.setText(this.price, `${fullPrice} синапсов`);
         this.disableButton = fullPrice;
 
         this.buttonOrder.addEventListener('click', () => {
@@ -54,29 +54,25 @@ export class CartModal extends Modal {
     }
 
     set disableButton(fullPrice: number) {
-        if(fullPrice === 0) {
-            this.buttonOrder.disabled = true;
-        } else {
-            this.buttonOrder.disabled = false;
-        }
+        this.setDisabled(this.buttonOrder, Boolean(!fullPrice));
     }
 }
 
 
 export class ProductsToCart extends Component<IProductToCart> {
     protected cardId: string;
-    protected index: HTMLElement;
-    protected title: HTMLElement;
-    protected price: HTMLElement;
+    protected indexElement: HTMLElement;
+    protected titleElement: HTMLElement;
+    protected priceElement: HTMLElement;
     protected buttonDelete: HTMLElement;
     protected events: IEvents;
 
     constructor(container: HTMLElement, events: IEvents) {
         super(container);
         this.events = events;
-        this.index = ensureElement<HTMLElement>('.basket__item-index', this.container);
-        this.title = ensureElement<HTMLElement>('.card__title', this.container);
-        this.price = ensureElement<HTMLElement>('.card__price', this.container);
+        this.indexElement = ensureElement<HTMLElement>('.basket__item-index', this.container);
+        this.titleElement = ensureElement<HTMLElement>('.card__title', this.container);
+        this.priceElement = ensureElement<HTMLElement>('.card__price', this.container);
         this.buttonDelete = ensureElement<HTMLElement>('.basket__item-delete', this.container);
 
         this.buttonDelete.addEventListener('click', () => {
@@ -89,28 +85,24 @@ export class ProductsToCart extends Component<IProductToCart> {
         this.cardId = value;
     }
 
-    set indexElement(value: number) {
-        this.setText(this.index, value);
+    set index(value: number) {
+        this.setText(this.indexElement, value);
     }
 
-    set titleElement(value: string) {
-        this.setText(this.title, value);
+    set title(value: string) {
+        this.setText(this.titleElement, value);
     }
 
-    set priceElement(value: number) {
+    set price(value: number) {
         if (value) {    
-            this.setText(this.price, value);
+            this.setText(this.priceElement, value);
         } else {
-            this.setText(this.price, '0');
+            this.setText(this.priceElement, '0');
         }
     }
 
     render(data: IProductToCart): HTMLElement {
-        this.indexElement = data.index;
-        this.titleElement = data.title;
-        this.priceElement = data.price;
-        this.id = data.id;
-        // super.render(data)  // вот так все сеттеры можно установить, если они совпадают с полями объекта
+        super.render(data)
         return this.container;
     }
 }

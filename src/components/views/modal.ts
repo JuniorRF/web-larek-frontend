@@ -30,7 +30,7 @@ export class Modal extends Component<IModal> {
     _toggleModal(state: boolean = true) {
         this.toggleClass(this.container, 'modal_active', state);
     }
-    
+
     _handleEscape = (evt: KeyboardEvent) => {
         if (evt.key === 'Escape') {
             this.close();

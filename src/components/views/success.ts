@@ -1,32 +1,30 @@
-import {  ensureElement } from "../../utils/utils";
+import { ensureElement } from "../../utils/utils";
+import { Component } from "../base/Component";
 import { IEvents } from "../base/events";
-import { Modal } from "./modal";
 
-export class SuccessModal extends Modal {
+
+interface ISuccessModal {
+    price: number;
+}
+
+export class SuccessModalNew extends Component<ISuccessModal> {
+    protected priceContent: HTMLParagraphElement;
     protected buttonSuccess: HTMLButtonElement;
-    protected price: HTMLParagraphElement;
+    protected events: IEvents;
 
-    // constructor(container: HTMLElement, events: IEvents ) {
-    //     super(container, events);
-        // this.setContent(template);
+    constructor(container: HTMLElement, events: IEvents) {
+        super(container);
+        this.events = events;
+        this.priceContent = ensureElement<HTMLParagraphElement>('.order-success__description', this.container);
+        this.buttonSuccess = ensureElement<HTMLButtonElement>('.order-success__close', this.container);
 
-       
-
-        
-
-    show(template: HTMLTemplateElement, price: number): void {
-
-        this.setContent(template);
-        this.buttonSuccess = ensureElement<HTMLButtonElement>('.order-success__close', this.content);
-        this.price = ensureElement<HTMLParagraphElement>('.order-success__description', this.content);
-        
-
-        
-        this.price.textContent = `Списано ${price} синапсов`;
-        
         this.buttonSuccess.addEventListener('click', () => {
             this.events.emit('success:ok');
         });
-        // this.open();
+    }
+
+    render(data: ISuccessModal): HTMLElement {
+        this.setText(this.priceContent, `Списано ${data.price} синапсов`);
+        return this.container;  
     }
 }
