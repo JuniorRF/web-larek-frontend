@@ -1,6 +1,4 @@
-import { cloneTemplate, ensureAllElements, ensureElement } from "../../utils/utils";
-import { IEvents } from "../base/events";
-import { IUserData } from "../../types";
+import { ensureAllElements, ensureElement } from "../../utils/utils";
 import { Modal } from "./modal";
 
 export class OrderModal extends Modal {
@@ -8,11 +6,6 @@ export class OrderModal extends Modal {
     protected payment: HTMLButtonElement[];
     protected formOrder: HTMLFormElement;
     protected addressError: HTMLElement;
-
-    // constructor(container: HTMLElement, events: IEvents, template: HTMLTemplateElement) {
-    //     super(container, events);
-    //     this.setContent(template);
-    // }
 
     show(template: HTMLTemplateElement): void {
         this.setContent(template);
@@ -46,14 +39,12 @@ export class OrderModal extends Modal {
                 address: this.formOrder.address.value
             });
         });
-
-        // this.open();
     }
 
     protected validateAddress(input: HTMLInputElement): void {
         const isValid = input.value.length > 3;
             this.setText(this.addressError, !input.value ? 'Необходимо указать адрес' : 
-                                        !isValid ? 'Адрес должен быть не менее 3 символов' : '');
+                !isValid ? 'Адрес должен быть не менее 3 символов' : '');
     }
 
     protected setPaymentMethod(method: string): void {

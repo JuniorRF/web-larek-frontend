@@ -1,4 +1,4 @@
-import { IApiOrder, IApiOrderResponse, IProductItem, IProductsGetApi } from "../types";
+import { IApiOrder, IApiOrderResponse, IProductItem } from "../types";
 import { Api, ApiListResponse } from "./base/api";
 
 export class ProductApi extends Api {

@@ -1,4 +1,3 @@
-import { Modal } from "./modal";
 import { IProductItem } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { BaseProduct } from "./poductBase";
@@ -34,5 +33,4 @@ export class ProductForModal extends BaseProduct {
     set disableButton(value: number) {
         this.setDisabled(this.buttonBuy, Boolean(!value));
     }
-
 }

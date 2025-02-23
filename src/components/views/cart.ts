@@ -1,4 +1,4 @@
-import { ensureElement, cloneTemplate } from "../../utils/utils";
+import { ensureElement } from "../../utils/utils";
 import { IProductToCart } from "../../types";
 import { Modal } from "./modal";
 import { Component } from "../base/Component";

@@ -18,9 +18,7 @@ import { ProductForModal } from './components/views/productModal';
 
 
 const templateCard = document.querySelector('#card-catalog') as HTMLTemplateElement;
-
 const modalContainer = document.querySelector('#modal-container') as HTMLElement;
-
 const templateOrderSuccess = document.querySelector('#success') as HTMLTemplateElement;
 const templateCardPreview = document.querySelector('#card-preview') as HTMLTemplateElement;
 const templateCardBasket = document.querySelector('#card-basket') as HTMLTemplateElement;
@@ -38,6 +36,7 @@ const cartModal = new CartModal(modalContainer, events);
 const orderModal = new OrderModal(modalContainer, events);
 const userData = new UserModel();
 const contactsModal = new ContactsModal(modalContainer, events);
+
 
 const api = new ProductApi(API_URL, CDN_URL)
 api.getProducts().then((data)=>{

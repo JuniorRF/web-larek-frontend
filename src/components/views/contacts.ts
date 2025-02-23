@@ -1,4 +1,4 @@
-import { cloneTemplate, ensureElement } from "../../utils/utils";
+import { ensureElement } from "../../utils/utils";
 import { Modal } from "./modal";
 
 export class ContactsModal extends Modal {
